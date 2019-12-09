@@ -100,17 +100,17 @@ determinado membro da banca.
 \end{comment}
 
 
-\membrodabancai{Prof. Fulano de Sousa, ENE/UnB}
+\membrodabancai{}
 
-\membrodabancaifuncao{Orientador}
+\membrodabancaifuncao{}
 
-\membrodabancaii{Prof. Ciclano dos Santos, ENE/UnB}
+\membrodabancaii{}
 
-\membrodabancaiifuncao{Examinador interno}
+\membrodabancaiifuncao{o}
 
-\membrodabancaiii{Prof. Beltrano da Silva, ENE/UnB}
+\membrodabancaiii{}
 
-\membrodabancaiiifuncao{Examinador interno}
+\membrodabancaiiifuncao{}
 
 \membrodabancaiv{}
 
@@ -133,28 +133,28 @@ Comandos para criar a capa e a página de assinaturas
 
 
 \capaprincipal
-\capaassinaturas
+% \capaassinaturas
 
 \begin{comment}
 Ficha Catalográfica
 \end{comment}
 
 
-\include{ficha_catalografica}
+
 
 \begin{comment}
 Dedicatória
 \end{comment}
 
 
-\frontmatter
+% \frontmatter
 
 \begin{comment}
 Texto de dedicatória do primeiro autor.
 \end{comment}
 
 
-\dedicatoriaautori{um beijo pra minha mãe, pro meu pai, e pra você}
+% \dedicatoriaautori{um beijo pra minha mãe, pro meu pai, e pra você}
 
 \begin{comment}
 Texto de dedicatória do segundo autor. Caso não tenha um segundo autor,
@@ -162,7 +162,7 @@ este texto não será mostrado
 \end{comment}
 
 
-\dedicatoriaautorii{Dedicatória do autor 2}
+% \dedicatoriaautorii{Dedicatória do autor 2}
 
 \begin{comment}
 Texto de dedicatória do terceiro autor. Caso não tenha um terceiro
@@ -170,14 +170,14 @@ autor, este texto não será mostrado
 \end{comment}
 
 
-\dedicatoriaautoriii{Dedicatória do autor 3}
+% \dedicatoriaautoriii{Dedicatória do autor 3}
 
 \begin{comment}
 Comando para criar a página de dedicatória
 \end{comment}
 
 
-\dedicatoria
+% \dedicatoria
 
 \begin{comment}
 Agradecimentos
@@ -216,26 +216,26 @@ Comando para criar a página de agradecimentos
 \end{comment}
 
 
-\agradecimentos
+% \agradecimentos
 
-\resumo{resumo}{Resumo!
+% \resumo{resumo}{Resumo!
 
-\medskip{}
-
-
-Palavras Chave: bla, ble, bli
-
-}\vspace*{2cm}
+% \medskip{}
 
 
-\resumo{Abstract}{Abstract, in English ofc!
+% Palavras Chave: bla, ble, bli
 
-\medskip{}
+% }\vspace*{2cm}
 
 
-Keywords: bla, ble, bli
+% \resumo{Abstract}{Abstract, in English ofc!
 
-}
+% \medskip{}
+
+
+% Keywords: bla, ble, bli
+
+% }
 
 \begin{comment}
 Listas de conteúdo, figuras e tabelas
@@ -243,15 +243,15 @@ Listas de conteúdo, figuras e tabelas
 
 
 \sumario
-\listadefiguras
-\listadetabelas
+% \listadefiguras
+% \listadetabelas
 
 \begin{comment}
 Lista de Símbolos
 \end{comment}
 
 
-\include{simbolos}
+% \include{simbolos}
 
 \begin{comment}
 Corpo Principal
@@ -295,7 +295,7 @@ Anexos
 \end{comment}
 
 
-\anexos
+% \anexos
 \makeatletter
 % não retirar estes comandos
 \renewcommand{\@makechapterhead}[1]{%
@@ -312,18 +312,18 @@ Anexo I: Descrição do CD
 \end{comment}
 
 
-\include{anexo_CD}
+% \include{anexo_CD}
 
-\refstepcounter{noAnexo}
+% \refstepcounter{noAnexo}
 
 \begin{comment}
 Anexo II: Programas Utilizados
 \end{comment}
 
 
-\include{anexo_Codigos}
+% \include{anexo_Codigos}
 
-\refstepcounter{noAnexo}
+% \refstepcounter{noAnexo}
 
 \begin{comment}
 Acrescente mais anexos conforme julgar necessário.
