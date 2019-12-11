@@ -7,6 +7,21 @@
 
 \section{Processos de Decisão de Markov}
 
+O problema abordado neste trabalho pode ser descrito como um Processo de Decisão de Markov (MDP).
+MDP é uma forma clássica de representação matemática de processos de decisão sequenciais.
+Nessa representação, cada decisão tomada por um agente que interage com o ambiente transforma o estado do processo e afeta a recompensa que o agente recebe imediatamente e a longo prazo.
+Esse estado também deve ser suficiente para conter toda a informação relevante para a dinâmica futura do processo.
+
+Assim, dado um espaço de ações $S$, um espaço de ações $A$ e um espaço de recompensas $R$, para cada par $(s, a)$ com $s \in S$ sendo o estado atual do processo e $a \in A$ a ação tomada pelo agente existe uma determinada probabilidade de atingir o estado $s' \in S$ e receber a recompensa imediata $r \in R$\cite{sutton2018reinforcement}.
+
+Essa abordagem é bastante flexível e torna possível a modelagem da dinâmica do futebol virtual de robôs de diversas maneiras de modo que cada agente possa construir um estado percebido a partir de seus sensores e tomar decisões acerca de qual ação tomar diante desse estado.
+
 \section{Aprendizagem por Reforço}
 
- 
+Dada uma modelagem do problema como um MDP, resta obter uma maneira de estimar as probabilidades que determinam a dinâmica desse MDP, e com isso determinar um critério de decisão - denominado política - capaz de maximizar a recompensa a longo prazo recebida pelo agente.
+
+O conjunto de técnicas que resolvem esse tipo de problema é chamado de Aprendizagem por Reforço.
+No campo da aprendizagem de máquina, ela se difere da Aprendizagem Supervisionada por não haver um conjunto de pares $(s, a)$ dados como corretos. Nesse tipo de aprendizagem, o objetivo é extrapolar uma solução genérica a partir de exemplos de um conjunto de treinamento dado como correto, o que não é prático em problemas em que não se tem exemplos de comportamentos corretos e que representem bem o conjunto total de situações possíveis.
+Ela também se diferencia da Aprendizagem Não-Supervisionada, que tradicionalmente visa encontrar estrutura em conjuntos de dados não classificados, enquanto a Aprendizagem por Reforço visa maximizar um sinal de recompensa\cite{sutton2018reinforcement}.
+
+Desse modo, as técnicas de Aprendizagem por Reforço serão aplicadas a fim de buscar políticas capazes de maximizar o desempenho dos jogadores virtuais, ou seja, políticas que permitam tornem os agentes capazes de fazer gols e evitar que os jogadores do time adversário façam gols.
