@@ -8,20 +8,20 @@
 
 
 \section{RoboCup Soccer Simulation 2D}
-\par A ideia de robôs jogando futebol foi proposta pela primeira vez em 1992 por Alan Mackworth\cite{mackworth1993seeing}. 
-Desde então a comunidade científica tem criado iniciativas buscando por soluções que torne isso realidade.
+\par A ideia de robôs jogando futebol foi proposta pela primeira vez em 1992 por Alan Mackworth\cite{mackworth1993seeing}.
+Desde então a comunidade científica tem criado iniciativas buscando por soluções que tornem isso realidade.
 Uma delas é a \textit{Robot World Cup Initiative}, abreviada como \textit{RoboCup}, que teve sua primeira edição em 1997 com mais de 40 equipes distribuídas entre as diversas categorias do evento.
-Atualmente, a RoboCup conta com mais de 10 categorias, entre elas a \textit{RoboCup Soccer Simulation 2D}, abreviada RCSS, objeto de estudo deste projeto. 
-\par A categoria apresenta, também, grande relevância no cenário brasileiro. 
+Atualmente, a RoboCup conta com mais de 10 categorias, entre elas a \textit{RoboCup Soccer Simulation 2D}, abreviada RCSS, objeto de estudo deste projeto.
+\par A categoria apresenta, também, grande relevância no cenário brasileiro.
 Desde 2005, a RCSS está presente na maior competição de robótica da América Latina, a \textit{Latin American Robotics Competition}, LARC.
-\par Nessa categoria, duas equipes de 11 jogadores autônomos e independentes jogam futebol em um ambiente virtual bidimensional. 
+\par Nessa categoria, duas equipes de 11 jogadores autônomos e independentes jogam futebol em um ambiente virtual bidimensional.
 Um servidor é responsável por esse ambiente e possui informação absoluta sobre o estado do jogo e suas regras.
 Os jogadores, por sua vez, recebem dele informação incompleta e ruidosa de seus sensores virtuais, podendo executar comandos a fim de atuar sobre o estado do jogo.
 
 \section{Abordagens utilizadas na categoria}
 \par Uma pesquisa sobre as abordagens para o desenvolvimento das estratégias dos times participantes da RCSS revelou o uso recorrente de métodos de inteligência computacional.
 \par A equipe chinesa \textit{WrightEagle}, campeã do principal evento internacional da categoria diversas vezes, utiliza Processos de Decisão de Markov ou MDPs para modelar a partida\cite{bai2015online}.
-\par A equipe japonesa \textit{HELIOS}, campeã de 2018 da categoria na RoboCup, divide seus jogadores em categorias "chutadores" e "não-chutadores". 
+\par A equipe japonesa \textit{HELIOS}, campeã de 2018 da categoria na RoboCup, divide seus jogadores em categorias "chutadores" e "não-chutadores".
 Os chutadores são responsáveis por realizar o planejamento de sequência de ações, utilizando métodos de valor de ação.
 Os não-chutadores, por sua vez, não tem conhecimento do planejamento feito pelos chutadores, e devem obter o máximo de informações relevantes para tentar gerar a mesma sequência de ações que jogador chutador\cite{nakashima2018helios2018}.
 \par A equipe brasileira \textit{ITAndroids}, atual campeã da LARC, utiliza a abordagem de sequência de ações, similar à \textit{HELIOS}, explorando uma árvore de ações criada dinamicamente de forma a maximizar o valor de cada ação. Além disso, utilizam Otimização por Enxame de Partículas \cite{} para adequar os parâmetros que calculam o valor da ação. A \textit{ITAndroids} também vem desenvolvendo o uso de Aprendizagem por Reforço Profunda \cite{maximoitandroids}.
