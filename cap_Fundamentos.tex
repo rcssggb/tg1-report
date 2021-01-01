@@ -8,12 +8,38 @@
 
 O problema abordado neste trabalho pode ser descrito como um Processo de Decisão de Markov (MDP).
 MDP é uma forma clássica de representação matemática de processos de decisão sequenciais.
-Nessa representação, cada decisão tomada por um agente que interage com o ambiente transforma o estado do processo e afeta a recompensa que o agente recebe imediatamente e a longo prazo.
+Nessa representação, cada ação tomada por um agente que interage com o ambiente transforma o estado do processo e determina a recompensa que o agente recebe imediatamente.
 Esse estado também deve ser suficiente para conter toda a informação relevante para a dinâmica futura do processo.
 
-Assim, dado um espaço de estados $S$, um espaço de ações $A$ e um espaço de recompensas $R$, para cada par $(s, a)$ com $s \in S$ sendo o estado atual do processo e $a \in A$ a ação tomada pelo agente existe uma determinada probabilidade de atingir o estado $s' \in S$ e receber a recompensa imediata $r \in R$\cite{sutton2018reinforcement}.
+% TODO inserir imagem clássica environment -> state -> agent -> action -> environment -> reward -> agent
+
+Assim, dado um espaço de estados $\mathcal{S}$, um espaço de ações $\mathcal{A}$ e um espaço de recompensas $\mathcal{R}$, para cada par $(S, A)$ com $S \in \mathcal{S}$ sendo o estado atual do processo e $A \in \mathcal{A}$ a ação tomada pelo agente existe uma determinada probabilidade de atingir o estado $S' \in \mathcal{S}$ e receber a recompensa imediata $R \in \mathcal{R}$ \cite{sutton2018reinforcement}.
 
 Essa abordagem é bastante flexível e torna possível a modelagem da dinâmica do futebol virtual de robôs de diversas maneiras de modo que cada agente possa construir um estado percebido a partir de seus sensores e tomar decisões acerca de qual ação tomar diante desse estado a fim de maximizar a recompensa recebida.
+
+\subsection{MDP Episódico e Contínuo}
+
+Um MDP pode ser caracterizado quanto à presença de um estado terminal. Caso o MDP tenha um ou mais estados que determinem o fim do processo, ele é dito episódico. A simulação de futebol de robôs tratada neste trabalho é um exemplo de MDP episódico, uma vez que o MDP termina ao se encerrar o tempo de jogo.
+
+Em contrapartida, há MDPs onde não está bem definido nenhum estado terminal. Nesses casos, o MDP pode continuar indefinidamente até que uma ação externa ao MDP determine a sua parada. Um exemplo disso é um MDP que controle um robô numa linha de produção. Caso o sistema de automação supervisor desse robô não determine sua parada (por falta de insumos, por exemplo), o MDP pode seguir operando indefinidamente.
+
+Nesta fundamentação, será tratado com mais atenção o caso episódico uma vez que é o caso que interessa para aplicação na simulação de futebol de robôs.
+
+\subsection{Recompensa e Retorno}
+
+Como definido acima, para cada ação tomada em um MDP é atribuída uma recompensa $R \in \mathcal{R}$. Essa recompensa é sempre referente ao instante de tempo em que ela ocorre, ou seja, não depende de qualquer outro fator que não o par $(S_t, A_t)$ executados no instante $t$ e a função de probabilidade associada pelo MDP a esse par. Por isso, é comum utilizar a notação $R_t$ para se referir à recompensa obtida em um instante de tempo $t$.
+
+Porém em muitos casos é esperado de um agente que ele tome decisões que maximizem a recompensa total ao fim de um episódio, ou seja, é esperado que se escolha $A_t$ a fim de maximizar não apenas $R_t$ mas sim o retorno $G_t = r_t + r_{t+1} + r_{t+2} + \dotsc + r_{terminal}$.
+
+% TODO pra encher linguiça a gente pode definir retorno descontado por lambda
+
+\subsection{Políticas}
+
+É dado o nome de política para qualquer função $\pi(S) \to \mathcal{A}$ que leve de um estado qualquer do MDP para uma ação a ser tomada. Para cada política $\pi$, existe uma função $q_\pi(S, A)$ que, para cada par de estado e ação, define a esperança de retorno caso o agente continue seguindo a política $\pi$ no restante do episódio.
+
+É possível comparar duas políticas $\pi$ e $\pi'$ a respeito de suas funções $q$. A política $\pi$ é considerada melhor ou igual a $\pi$, ou $\pi \ge \pi'$, caso $q_\pi(S, A) \ge q_{\pi'}(S, A)$ para todo par $(S, A)$.
+
+Sempre há ao menos uma política melhor ou igual a todas as outras, denominada política ótima. Qualquer política que cumpra esse requisito é denominada $\pi_*$ e, caso haja mais de uma, todas devem possuir a mesma função $q$ denominada $q_*$. \cite{sutton2018reinforcement} % chap 3.6
 
 \section{Aprendizagem por Reforço}
 
@@ -22,11 +48,25 @@ Dada uma modelagem do problema como um MDP, resta obter uma maneira de estimar a
 O conjunto de técnicas que resolvem esse tipo de problema é chamado de Aprendizagem por Reforço.
 No campo da aprendizagem de máquina, ela se difere da Aprendizagem Supervisionada por não haver um conjunto de pares $(s, a)$ dados como corretos.
 Nesse tipo de aprendizagem, o objetivo é extrapolar uma solução genérica a partir de exemplos de um conjunto de treinamento dado como correto, o que não é prático em problemas em que não se tem exemplos de comportamentos corretos e que representem bem o conjunto total de situações possíveis.
-Ela também se diferencia da Aprendizagem Não-Supervisionada, que tradicionalmente visa encontrar estrutura em conjuntos de dados não classificados, enquanto a Aprendizagem por Reforço visa maximizar um sinal de recompensa\cite{sutton2018reinforcement}.
+Ela também se diferencia da Aprendizagem Não-Supervisionada, que tradicionalmente visa encontrar estrutura em conjuntos de dados não classificados, enquanto a Aprendizagem por Reforço visa maximizar um sinal de recompensa \cite{sutton2018reinforcement}.
 
-Desse modo, as técnicas de Aprendizagem por Reforço serão aplicadas a fim de buscar políticas capazes de maximizar o desempenho dos jogadores virtuais, ou seja, políticas que permitam tornem os agentes capazes de fazer gols e evitar que os jogadores do time adversário façam gols.
+Desse modo, as técnicas de Aprendizagem por Reforço serão aplicadas a fim de buscar políticas capazes de maximizar o desempenho dos jogadores virtuais, ou seja, obter políticas que tornem os agentes capazes de fazer gols e evitar que os jogadores do time adversário façam gols.
+
+\subsection{Aprendizagem On-policy e Off-policy}
+
+Entre as técnicas de aprendizagem por reforço existe uma divisão entre a aprendizagem on-policy e a aprendizagem off-policy, referentes à relação entre a política executada durante o aprendizado e a política sobre a qual se quer aprender.
+
+Nos algoritmos de aprendizagem on-policy, o agente aprende a respeito da política $\pi$ enquanto navega o MDP de acordo com a própria política $\pi$.
+
+Já nos algoritmos de aprendizagem off-policy, o agente aprende a respeito da política alvo $\pi$ enquanto navega o MDP de acordo com a política $b$, ou seja, ele estima a função $q_{\pi}$ enquanto segue a política $b$.
+
+Os métodos off-policy costumam introduzir variância no processo, tornando o aprendizado ruidoso e em alguns casos a garantia de convergência é provada apenas para o caso on-policy. % TODO: carece de fonte
+
+Além disso, é possível observar que a aprendizagem on-policy é apenas um caso particular da aprendizagem off-policy em que $b = \pi$.
 
 \subsection{Q-Learning}
+
+
 
 \subsection{Deep Q-Learning}
 
