@@ -11,7 +11,12 @@ MDP é uma forma clássica de representação matemática de processos de decis�
 Nessa representação, cada ação tomada por um agente que interage com o ambiente transforma o estado do processo e determina a recompensa que o agente recebe imediatamente.
 Esse estado também deve ser suficiente para conter toda a informação relevante para a dinâmica futura do processo.
 
-% TODO inserir imagem clássica environment -> state -> agent -> action -> environment -> reward -> agent
+\begin{figure}[h]
+	\includegraphics[width=0.6\linewidth]{figs/RL.png}
+	\centering
+	\caption{Representação da dinâmica de um ambiente MDP}
+	\label{fig:mdp_env}
+\end{figure}
 
 Assim, dado um espaço de estados $\mathcal{S}$, um espaço de ações $\mathcal{A}$ e um espaço de recompensas $\mathcal{R}$, para cada par $(S, A)$ com $S \in \mathcal{S}$ sendo o estado atual do processo e $A \in \mathcal{A}$ a ação tomada pelo agente existe uma determinada probabilidade de atingir o estado $S' \in \mathcal{S}$ e receber a recompensa imediata $R \in \mathcal{R}$ \cite{sutton2018reinforcement}.
 
