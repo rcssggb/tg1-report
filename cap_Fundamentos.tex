@@ -27,9 +27,9 @@ Nesta fundamentação, será tratado com mais atenção o caso episódico uma ve
 
 \subsection{Recompensa e Retorno}
 
-Como definido acima, para cada ação tomada em um MDP é atribuída uma recompensa $R \in \mathcal{R}$. Essa recompensa é sempre referente ao instante de tempo em que ela ocorre, ou seja, não depende de qualquer outro fator que não o par $(S_t, A_t)$ executados no instante $t$ e a função de probabilidade associada pelo MDP a esse par. Por isso, é comum utilizar a notação $R_t$ para se referir à recompensa obtida em um instante de tempo $t$.
+Como definido acima, para cada ação tomada em um MDP é atribuída uma recompensa $R \in \mathcal{R}$. Essa recompensa é sempre referente ao instante de tempo anterior, ou seja, não depende de qualquer outro fator que não o par $(S_t, A_t)$ executados no instante $t$ e a função de probabilidade associada pelo MDP a esse par. Por isso, é comum utilizar a notação $R_{t+1}$ para se referir à recompensa obtida após tomar a ação $A_t$ no instante de tempo $t$.
 
-Porém em muitos casos é esperado de um agente que ele tome decisões que maximizem a recompensa total ao fim de um episódio, ou seja, é esperado que se escolha $A_t$ a fim de maximizar não apenas $R_t$ mas sim o retorno $G_t = r_t + r_{t+1} + r_{t+2} + \dotsc + r_{terminal}$.
+Porém em muitos casos é esperado de um agente que ele tome decisões que maximizem a recompensa total ao fim de um episódio, ou seja, é esperado que se escolha $A_t$ a fim de maximizar não apenas $R_{t+1}$ mas sim o retorno $G_{t+1} = R_{t+1} + R_{t+2} + \dotsc + R_{terminal}$.
 
 % TODO pra encher linguiça a gente pode definir retorno descontado por lambda
 
@@ -39,7 +39,9 @@ Porém em muitos casos é esperado de um agente que ele tome decisões que maxim
 
 É possível comparar duas políticas $\pi$ e $\pi'$ a respeito de suas funções $q$. A política $\pi$ é considerada melhor ou igual a $\pi$, ou $\pi \ge \pi'$, caso $q_\pi(S, A) \ge q_{\pi'}(S, A)$ para todo par $(S, A)$.
 
-Sempre há ao menos uma política melhor ou igual a todas as outras, denominada política ótima. Qualquer política que cumpra esse requisito é denominada $\pi_*$ e, caso haja mais de uma, todas devem possuir a mesma função $q$ denominada $q_*$. \cite{sutton2018reinforcement} % chap 3.6
+Sempre há ao menos uma política melhor ou igual a todas as outras, denominada política ótima. Qualquer política que cumpra esse requisito é denominada $\pi_*$ e, caso haja mais de uma, todas devem possuir a mesma função $q$ denominada $q_*$ \cite{sutton2018reinforcement}. % chap 3.6
+
+Uma política que toma sempre o caminho de maior retorno é denominada gulosa, e uma política que toma o caminho de maior retorno mas escolhe uma ação aleatoriamente com probabilidade parametrizada $\epsilon$ é denominada $\epsilon$-gulosa.
 
 \section{Aprendizagem por Reforço}
 
@@ -64,13 +66,41 @@ Os métodos off-policy costumam introduzir variância no processo, tornando o ap
 
 Além disso, é possível observar que a aprendizagem on-policy é apenas um caso particular da aprendizagem off-policy em que $b = \pi$.
 
+\subsection{Métodos Tabulares e de Solução Aproximada}
+
+% TODO
+
 \subsection{Q-Learning}
 
+Um dos algoritmos mais populares no campo da aprendizagem por reforço é o Q-Learning. Trata-se de um método off-policy que aproxima diretamente a função $q_*$ independente da política que estiver sendo adotada pelo agente durante o treinamento.
 
+O algoritmo é também muito simples. Dada uma representação tabular $Q: (\mathcal{S},\mathcal{A}) \to \mathbb{R}$ da função $q_*$, para cada instante de tempo $t$ é realizada a seguinte atualização a fim de aproximar $Q$ de $q_*$:
 
-\subsection{Deep Q-Learning}
+\begin{equation}
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha[R_{t+1} + \max_{a} Q(S_{t+1}, a) - Q(S_t, A_t)]
+\end{equation}
 
-\subsection{Double Q-Learning}
+Após iterações suficientes, espera-se que $Q$ convirja para $q_*$. Em alguns casos a convergência é provada matematicamente.
 
+Uma vez estimada a função $q_*$, é simples obter a política ótima. Basta escolher a ação que maximiza $q_*$ no estado atual, ou seja:
 
+\begin{equation}
+A_{t+1} = \max_{a} q_*(S_t, a)
+\end{equation}
 
+É comum, mas não obrigatório, que a política $b$ seguida durante o aprendizado seja $epsilon$-gulosa em relação à aproximação Q.
+
+\subsection{Q-Learning Duplo}
+
+Apesar de popular o Q-Learning possui um problema de viés de maximização. Uma vez que a aproximação $Q$ é imprecisa no início do treinamento, é possível que o retorno esperado estimado seja enviesado para um valor maior do que o real.
+
+Como solução para esse problema, é utilizada a abordagem do Q-Learning Duplo. Nela são utilizadas duas aproximações, $Q_1$ e $Q_2$, e a atualização de $Q$ é dada da seguinte forma:
+
+\begin{equation}
+\label{eq:doubleq}
+Q_1(S_t, A_t) \leftarrow Q_1(S_t, A_t) + \alpha[R_{t+1} + Q_2(S_{t+1}, \text{arg}\max_a Q_1(S_{t+1}, a)) - Q_1(S_t, A_t)]
+\end{equation}
+
+Em metade das iterações (através de um sorteio, por exemplo), as aproximações $Q_1$ e $Q_2$ são trocadas. Com isso é anulado o viés de maximização gerado pelo uso de $\max_a Q$ como estimativa de retorno para os estados seguintes.
+
+A vantagem desse método é que apesar de dobrar os requisitos de memória do algoritmo, afinal será preciso armazenar os dados referentes a duas aproximaçoes, ele não aumenta o custo computacional por iteração.
