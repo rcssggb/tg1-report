@@ -38,6 +38,24 @@ Os jogadores, por sua vez, recebem dele informação incompleta e ruidosa de seu
 
 \subsection{Sensores}
 
+Para receber informações a respeito da situação do jogo, cada cliente conectado recebe mensagens referentes a atualizações de três sensores virtuais descritos abaixo.
+
+\subsubsection{Sensor Auditivo}
+
+As mensagens do sensor auditivo são do seguinte formato:
+
+\textit{(hear Tempo Remetente "mensagem")}
+
+Onde \textit{Tempo} é o número do ciclo em que a mensagem foi ouvida e \textit{Remetente} é descrição de quem enviou a mensagem. O \textit{Remetente} pode ser o árbitro, outros jogadores, um dos treinadores ou o próprio jogador.
+
+No escopo deste trabalho, apenas as mensagens do árbitro serão consideradas, não sendo implementada nenhuma forma de comunicação direta entre os jogadores.
+
+\subsubsection{Sensor Visual}
+
+% TODO
+
+\subsubsection{Sensor Corporal}
+
 % TODO
 
 \subsection{Ações}
