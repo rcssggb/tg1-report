@@ -52,20 +52,31 @@ No escopo deste trabalho, apenas as mensagens do árbitro serão consideradas, n
 
 \subsubsection{Sensor Visual}
 
-% TODO
+As mensagens do sensor visual contém as posições relativas referentes a cada objeto dentro do campo de visão do jogador. Esses objetos podem ser outros jogadores, marcadores como bandeiras e linhas (Figura \ref{fig:flags}) e a bola. O formato genérico é este:
 
-\begin{figure}[h]
-	\label{fig:flags}
-	\includegraphics[width=0.7\linewidth]{figs/flags.png}
+\textit{(see (Objeto1)(Objeto2)(Objeto3)...(ObjetoN))}
+
+Onde cada objeto tem o seguinte formato:
+
+\textit{((NomeDoObjeto) Distância Direção VariaçãoDeDistância VariaçãoDeDireção DireçãoDoCorpo DireçãoDaCabeça)}
+
+Sendo a distância e a direção dados em coordenadas polares, assim como suas variações. As informações de direção do corpo e da cabeça só aparecem quando o objeto em questão é um outro jogador.
+
+\begin{figure}[H]
+	\includegraphics[width=0.9\linewidth]{figs/flags.png}
 	\centering
 	\caption{Indicadores espalhados pelo campo para que o agente possa estimar sua posição absoluta \cite{rcssmanual2003}.}
+	\label{fig:flags}
 \end{figure}
+
+A riqueza de detalhes a respeito das informações obtidas depende da distância entre o objeto e o jogador. Por exemplo, caso esteja sendo visto outro jogador a uma distância muito grande, talvez seja impossível determinar o número de sua camisa ou até mesmo a qual time ele pertence. Em contrapartida, para jogadores próximos, é fornecido até mesmo a direção para a qual ele está olhando.
 
 \subsubsection{Sensor Corporal}
 
-% TODO
+O sensor corporal contém informações sobre o estado físico do jogador. Entre elas sua energia, que é consumida a cada ação tomada como chute ou arrancada (Seção \ref{sec:actions}), sua própria velocidade e direção de movimento, a direção de sua cabeça e a quantidade de cartões de advertência recebidos.
 
 \subsection{Ações}
+\label{sec:actions}
 
 % TODO
 
