@@ -22,3 +22,5 @@ relatorio.pdf
 *.ind
 
 relatorio.dvi
+
+.DS_Store
